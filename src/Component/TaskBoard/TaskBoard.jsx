@@ -9,9 +9,10 @@ const TaskBoard = () => {
   //   handler here
 
   const getNextId = (data) => {
-    const nextId = data.reduce((prev, current) => {
-      prev && prev.id > data.id ? prev.id : current.id;
-    });
+    const nextId = data.reduce(
+      (prev, current) => (prev && prev > current.id ? prev : current.id),
+      0
+    );
 
     return nextId + 1;
   };
@@ -22,15 +23,26 @@ const TaskBoard = () => {
       {
         id: getNextId(tasks),
         text: text,
-        done: true,
+        done: false,
       },
     ]);
   };
 
-  //   change handler
+  // const handleAddTask = (text) => {
+  //   setTasks([
+  //     ...tasks,
+  //     {
+  //       id: getNextId(tasks),
+  //       text: text,
+  //       done: false,
+  //     },
+  //   ]);
+  // };
+
+  // //   change handler
 
   const handleChangeTask = (task) => {
-    const nextTask = tasks.map((t) => {
+    const nextTasks = tasks.map((t) => {
       if (t.id === task.id) {
         return task;
       } else {
@@ -38,14 +50,16 @@ const TaskBoard = () => {
       }
     });
 
-    setTasks(nextTask);
+    setTasks(nextTasks);
   };
 
-  //   Delete handler
+  // //   Delete handler
 
   const handleDeleteTask = (taskId) => {
     setTasks(tasks.filter((task) => task.id !== taskId));
   };
+
+  // handlers
 
   return (
     <div>
